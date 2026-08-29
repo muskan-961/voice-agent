@@ -1,0 +1,15 @@
+{
+  "name": "voice-slides",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AI voice presenter: talks through a slide deck, jumps slides based on your questions, and can be interrupted mid-sentence.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

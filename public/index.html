@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Voice-Guided Slides — Antibiotics</title>
+<link rel="stylesheet" href="styles.css" />
+<script>
+  // Applied synchronously, before first paint, so a stored theme choice
+  // doesn't flash the system-default theme for a moment on load.
+  (function () {
+    try {
+      var t = localStorage.getItem('voiceSlides.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {
+      // ignore
+    }
+  })();
+</script>
+</head>
+<body>
+  <button id="theme-toggle" class="theme-toggle" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">☀️</button>
+  <div class="app">
+    <header>
+      <h1>Antibiotics: From Discovery to Resistance</h1>
+      <p class="subtitle">Ask a question anytime — the AI presenter jumps to the right slide and answers out loud. You can interrupt it mid-sentence.</p>
+    </header>
+
+    <div class="error-banner" id="error-banner" hidden role="alert">
+      <span id="error-banner-text"></span>
+      <button type="button" id="error-banner-retry" class="banner-retry-btn" hidden>Retry now</button>
+    </div>
+
+    <main class="stage">
+      <div class="slide" id="slide">
+        <h2 id="slide-title">Loading…</h2>
+        <ul id="slide-bullets"></ul>
+      </div>
+      <div class="dots-row">
+        <button id="prev-slide-btn" class="nav-arrow-btn" type="button" title="Previous slide" aria-label="Previous slide">‹</button>
+        <div class="dots" id="dots"></div>
+        <button id="next-slide-btn" class="nav-arrow-btn" type="button" title="Next slide" aria-label="Next slide">›</button>
+      </div>
+      <div class="slide-counter" id="slide-counter"></div>
+    </main>
+
+    <div class="transcript-wrap">
+      <div class="transcript" id="transcript"></div>
+      <button id="download-transcript-btn" class="transcript-icon-btn" type="button" title="Download Transcript" aria-label="Download Transcript" disabled>⬇</button>
+    </div>
+
+    <footer class="controls">
+      <button id="mic-btn" class="mic-btn" disabled>
+        <span class="mic-icon"></span>
+        <span id="mic-label">Loading…</span>
+      </button>
+      <div class="status" id="status">Idle</div>
+      <p class="hint">Try saying "next slide", "previous slide", or "stop".</p>
+      <div class="secondary-row">
+        <button id="resume-btn" class="secondary-btn" hidden>↺ Resume Previous Session</button>
+      </div>
+    </footer>
+
+    <section class="mic-test">
+      <button id="mic-test-btn" class="secondary-btn" disabled>Test Microphone</button>
+      <div class="mic-test-results" id="mic-test-results" hidden>
+        <div class="mic-test-status" id="mic-test-status">Click "Test Microphone" and speak…</div>
+        <div class="mic-test-interim" id="mic-test-interim"></div>
+        <ul class="mic-test-log" id="mic-test-log"></ul>
+      </div>
+    </section>
+
+    <section class="llm-settings">
+      <button id="settings-toggle" class="secondary-btn" type="button">⚙ LLM Settings</button>
+      <div class="active-provider" id="active-provider">Using: not yet confirmed — will update after the first response</div>
+      <div class="settings-panel" id="settings-panel" hidden>
+        <label class="field">
+          <span>Provider</span>
+          <select id="provider-select">
+            <option value="groq">Groq</option>
+            <option value="gemini">Gemini</option>
+            <option value="openai">OpenAI</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>API Key</span>
+          <div class="key-input-row">
+            <input type="password" id="api-key-input" placeholder="Leave blank to use server default" autocomplete="off" spellcheck="false" />
+            <button type="button" id="toggle-key-visibility" class="icon-btn" title="Show/hide key">👁</button>
+          </div>
+        </label>
+        <label class="field">
+          <span>Model</span>
+          <input type="text" id="model-input" placeholder="e.g. openai/gpt-oss-120b" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>Base URL</span>
+          <input type="text" id="base-url-input" placeholder="https://api.groq.com/openai/v1" autocomplete="off" spellcheck="false" />
+        </label>
+        <div class="settings-actions">
+          <span class="settings-saved" id="settings-saved" hidden>Saved ✓</span>
+          <button type="button" id="settings-clear" class="secondary-btn">Clear Stored Key</button>
+        </div>
+        <p class="hint">Stored only in this browser (localStorage) and sent to your own server per request — never logged. Leave blank to use the server's configured key.</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

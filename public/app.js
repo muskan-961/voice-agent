@@ -160,7 +160,7 @@ const PROVIDER_PRESETS = {
   // Google's OpenAI-compatibility endpoint — accepts the same
   // chat-completions/tools request shape as the others.
   gemini: { baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai', model: 'gemini-3.6-flash' },
-  openai: { baseUrl: 'https://api.openai.com/v1', model: 'gpt-5.6-luna' },
+  openai: { baseUrl: 'https://api.openai.com/v1', model: 'gpt-4o' },
 };
 
 // Reports which provider/model actually handled the last request — sourced

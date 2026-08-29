@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 // blank (e.g. the page's LLM Settings panel left empty). Any
 // OpenAI-compatible chat-completions endpoint works; defaults to OpenAI.
 const DEFAULT_BASE_URL = (process.env.LLM_BASE_URL || 'https://api.openai.com/v1').replace(/\/+$/, '');
-const DEFAULT_MODEL = process.env.LLM_MODEL || 'gpt-5.6-luna';
+const DEFAULT_MODEL = process.env.LLM_MODEL || 'gpt-4o';
 const DEFAULT_API_KEY = process.env.LLM_API_KEY || '';
 
 // Dedicated Groq fallback — kept separate from the primary default above
